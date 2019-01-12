@@ -1,0 +1,4 @@
+/node_modules
+.eslint
+/app/images/*
+/app/sounds/*
