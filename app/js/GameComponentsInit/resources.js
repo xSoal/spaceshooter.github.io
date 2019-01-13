@@ -34,10 +34,15 @@ export default function(){
             object: new Image(),
             src: "images/bg2.jpg"
         },
-        boom: {
+        boomImage: {
             type: "image",
             object: new Image(),
             src: "images/boom.png",
+        },
+        boomEnemySound: {
+            type: "sound",
+            object: new Audio(),
+            src: "sounds/enemy_boom.mp3",
         }
     }
 

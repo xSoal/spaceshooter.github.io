@@ -24,7 +24,6 @@ export default class Ship {
             },
         };
 
-
         this.ship  = {
             width: 34,
             height: 64,
@@ -34,7 +33,11 @@ export default class Ship {
             },
             lifes: gameConf.defaultLifes,
             lastFrameCountOfFireCreate: 0,
+            canTouch: true,
+            shieldEnable: false,
         };
+        this.disableMoveTime = 500;
+
         this.init();
     }
 
@@ -45,11 +48,13 @@ export default class Ship {
         this.fireActionHandlerId = this.canvas.addActionHandler(()=>{
             gameConf.mouse.mouseDown.value ? this.shipFire( this.canvas.ctx ) : "";
         });
+        this.moveActionHandlerId = this.canvas.addActionHandler(()=>{
+            this.ship.position.x = gameConf.mouse.x;
+            this.ship.position.y = gameConf.mouse.y;
+        });
     }
 
     shipMove( ctx ){
-        this.ship.position.x = gameConf.mouse.x;
-        this.ship.position.y = gameConf.mouse.y;
 
         let xSpritePosition =
             this.image.spriteSize.spritePosition < this.image.spriteSize.spritesCount - 1
@@ -92,6 +97,73 @@ export default class Ship {
 
     }
 
+
+    collisionWidthEnemy(){
+       
+        if(!this.ship.canTouch) return;
+        // this.ship.canTouch = false;.kkkll
+
+
+        
+
+        this.startDestroying();
+    }
+
+    startDestroying(){
+        console.log(this.ship.shieldEnable)
+        if(this.ship.shieldEnable){
+            this.moveStopped();
+        } else {
+            this.shieldEnable();
+            // if(--this.ship.lifes > 0){
+            //     // this.looseLvl();
+            //     console.log('qwe2')
+            //     this.moveStopped();
+            //     this.shieldEnable();
+            // } else {
+            //     console.log('qwe1234')
+            // }
+            
+        }
+
+    }
+
+    moveStopped(){
+        this.canvas.removeActionHandler(this.moveActionHandlerId);
+        setTimeout(()=>{
+            this.moveActionHandlerId = this.canvas.addActionHandler(()=>{
+                this.ship.position.x = gameConf.mouse.x;
+                this.ship.position.y = gameConf.mouse.y;
+            });
+        },this.disableMoveTime);
+    }
+
+    shieldEnable(){
+       
+        this.ship.shieldEnable = true;
+        this.shieldDrawId = this.canvas.addHandlerToDraw(ctx=>{
+            ctx.strokeStyle = "white";
+            ctx.beginPath();
+            ctx.arc(
+                this.ship.position.x,
+                this.ship.position.y,
+                this.ship.height > this.ship.width ?
+                    this.ship.height + 1
+                    : this.ship.width + 1,
+                0,
+                2 * Math.PI);
+            ctx.stroke();
+            ctx.closePath();
+        });
+        setTimeout(()=>{
+            this.canvas.removeHandlerToDraw(this.shieldDrawId);
+            this.ship.shieldEnable = false;
+        },2000);
+    }
+
+    looseLvl(){
+        this.canvas.stop();
+    }
 
 
 }

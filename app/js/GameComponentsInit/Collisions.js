@@ -51,6 +51,8 @@ export default class Collisions {
                     x: enemy.ship.position.x,
                     y: enemy.ship.position.y,
                 },enemy); 
+                enemy.startDestroy();
+                this.ship.collisionWidthEnemy();
             }
         });
     }

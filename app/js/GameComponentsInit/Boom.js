@@ -7,7 +7,7 @@ export default class Boom{
         this.boom = {
             isDestroyStart: false,
             counter: 0,
-            image: resources.boom.object,
+            image: resources.boomImage.object,
             width: 64,
             height: 64,
             spriteSize: {

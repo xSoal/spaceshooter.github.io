@@ -33,6 +33,9 @@ export default class Enemy{
                     spritePosition: 0,
                     spritesCount: 4,
                 },
+            },
+            sound: {
+                object: resources.boomEnemySound.object
             }
         };
         
@@ -80,8 +83,8 @@ export default class Enemy{
     startDestroy(){
         if(this.isDestroyStart) return;
         this.isDestroyStart = true;
-
-        
+        console.log('enemy destroy')
+        this.playSoundDestroying();
 
         this.actionDestroyHandler = this.canvas.addActionHandler(()=>{
             this.ship.speed = this.ship.speed * 0.5 + 1;
@@ -91,8 +94,11 @@ export default class Enemy{
         });
     }
 
-
-
+    playSoundDestroying(){
+        let soundDestroyToPlay = new Audio();
+        soundDestroyToPlay.src = this.ship.sound.object.src;
+        soundDestroyToPlay.play();
+    }
 
     checkForOutScreen(){
         if( this.ship.position.y > this.canvas.height ) {
