@@ -20,7 +20,7 @@ export default class Enemy{
         this.easy = {
             width: 167,
             height: 75,
-            speed: 15,
+            speed: 1,
             position: {
                 x: fns.randomInt(170 , this.canvas.width),
                 y: -40,

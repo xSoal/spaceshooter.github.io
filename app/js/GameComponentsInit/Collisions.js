@@ -42,9 +42,15 @@ export default class Collisions {
 
     checkCollisionsShipAndEnemies(){
         Object.values(this.gameObjects.enemyShips).forEach(enemy=>{
-            console.log( this.ship.ship.position, enemy.ship.position )
-            if(fns.checkCollisionRectangles(enemy.ship, this.ship.ship)){
-   
+            if(fns.checkCollisionRectangles(enemy.ship, this.ship.ship, true)){
+                new Boom(this.canvas, this.gameObjects, this.resources, {
+                    x: this.ship.ship.position.x,
+                    y: this.ship.ship.position.y,
+                },enemy);     
+                new Boom(this.canvas, this.gameObjects, this.resources, {
+                    x: enemy.ship.position.x,
+                    y: enemy.ship.position.y,
+                },enemy); 
             }
         });
     }

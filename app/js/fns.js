@@ -1,4 +1,4 @@
-
+import Enemy from './GameComponentsInit/Enemy'
 
 export default {
     randomFloat: function(min,max){
@@ -7,9 +7,10 @@ export default {
     randomInt: function(min,max){
         return Math.floor(Math.random() * (max - min)) + min;
     },
-    checkCollisionRectangles: function( objA, objB ){
+    checkCollisionRectangles: function( objA, objB, from ){
         // it's need for one type of object structure: 
         // must to use obj.position = {x: value, y: value} && ( obj.width && obj.height )
+        
         let { x:ax , y:ay } = objA.position;
         let { x:bx , y:by } = objB.position;
         let { width:aw , height:ah } = objA;

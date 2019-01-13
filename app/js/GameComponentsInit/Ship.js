@@ -26,10 +26,8 @@ export default class Ship {
 
 
         this.ship  = {
-            size: {
-                width: 34,
-                height: 64,
-            },
+            width: 34,
+            height: 64,
             position: {
                 x: gameConf.mouse.x,
                 y: gameConf.mouse.y,
@@ -62,12 +60,12 @@ export default class Ship {
                 this.image.object,
                 xSpritePosition * this.image.spriteSize.width,
                 0,
-                this.ship.size.width * 2,
-                this.ship.size.height * 2,
-                this.ship.position.x - this.ship.size.width / 2,
-                this.ship.position.y - this.ship.size.height / 2,
-                this.ship.size.width,
-                this.ship.size.height,
+                this.ship.width * 2,
+                this.ship.height * 2,
+                this.ship.position.x - this.ship.width / 2,
+                this.ship.position.y - this.ship.height / 2,
+                this.ship.width,
+                this.ship.height,
             );
     }
 
@@ -83,7 +81,7 @@ export default class Ship {
             id: id,
             position: {
                 x: this.ship.position.x,
-                y: this.ship.position.y - this.ship.size.height / 2,
+                y: this.ship.position.y - this.ship.height / 2,
             },
             sound: () => {
                 let sound = new Audio;
