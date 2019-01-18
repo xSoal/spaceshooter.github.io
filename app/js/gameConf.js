@@ -1,4 +1,8 @@
+import showFps from './devFns';
 
+
+// it will newer be 'prod'
+const gameMode = 'dev';
 
 let obj = {
     maxFramesInSecond: 50,
@@ -13,7 +17,15 @@ let obj = {
     defaultLifes: 4,
     boomSpritesCount: 8,
     dataCanvas : {
-        fps: 0,
+        _fps: 0,
+        set fps(value){
+            this._fps = value;
+            gameMode == 'dev' ? showFps(value) : ''; 
+            return this._fps;
+        },
+        get fps(){
+            return this._fps;
+        },
         framesAll: 0, 
     },
     sound: {
