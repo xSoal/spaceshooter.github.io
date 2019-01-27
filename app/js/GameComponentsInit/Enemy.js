@@ -17,9 +17,17 @@ export default class Enemy{
             all: gameConf.boomSpritesCount
         }
 
+        const easySpriteSize = {
+            width: 234,
+            height: 150,
+            spritePosition: 0,
+            spritesCount: 4,
+        };
+        const randSize  = fns.randomInt(25,100);
+
         this.easy = {
-            width: 167,
-            height: 75,
+            width: randSize  * easySpriteSize.width / easySpriteSize.height,
+            height: randSize * easySpriteSize.height / easySpriteSize.width,
             speed: 1,
             position: {
                 x: fns.randomInt(170 , this.canvas.width),
@@ -27,18 +35,13 @@ export default class Enemy{
             },
             image: {
                 object: resources.enemyEasyImage.object,
-                spriteSize: {
-                    width: 234,
-                    height: 150,
-                    spritePosition: 0,
-                    spritesCount: 4,
-                },
+                spriteSize: easySpriteSize,
             },
             sound: {
                 object: resources.boomEnemySound.object
             }
         };
-        
+ 
         switch (type) {
             case "easy":
                 this.ship = this.easy;
@@ -83,9 +86,7 @@ export default class Enemy{
     startDestroy(){
         if(this.isDestroyStart) return;
         this.isDestroyStart = true;
-        console.log('enemy destroy')
         this.playSoundDestroying();
-
         this.actionDestroyHandler = this.canvas.addActionHandler(()=>{
             this.ship.speed = this.ship.speed * 0.5 + 1;
             if(++this.destroyFrames.counter >= this.destroyFrames.all){
@@ -107,7 +108,6 @@ export default class Enemy{
     }
 
     delete(){
-       
         delete this.gameObjects.enemyShips[this.id];
         this.canvas.removeActionHandler(this.actionMoveHandler);
         this.canvas.removeHandlerToDraw( this.drawHandler );
