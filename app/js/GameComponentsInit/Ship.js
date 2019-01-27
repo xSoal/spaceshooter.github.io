@@ -25,6 +25,7 @@ export default class Ship {
             },
         };
 
+        self = this;
         this.ship  = {
             width: 34,
             height: 64,
@@ -36,7 +37,13 @@ export default class Ship {
             lastFrameCountOfFireCreate: 0,
             canTouch: true,
             canMove: true,
-            shieldEnable: false,
+            _shieldEnable: false,
+            get shieldEnable(){
+                return this._shieldEnable;
+            },
+            set shieldEnable(value){
+                value ? self.shieldEnable() : this._shieldEnable = false;
+            }
         };
         this.disableMoveTime = 2500;
 
@@ -106,29 +113,22 @@ export default class Ship {
         if(!this.ship.canTouch) return;
         // this.ship.canTouch = false;.kkkll
 
-
-        
-
-        this.startDestroying();
+        this.lifeShift();
     }
 
-    startDestroying(){
-        console.log(this.ship.shieldEnable);
-
-        if(!this.ship.shieldEnable){
-            this.moveStoppedAndSetStartPosition();
-            this.shieldEnable();
-        } else {
-            
-            // if(--this.ship.lifes > 0){
-            //     // this.looseLvl();
-            //     console.log('qwe2')
-            //     this.moveStopped();
-            //     this.shieldEnable();
-            // } else {
-            //     console.log('qwe1234')
-            // }
-        }
+    lifeShift(){
+    
+        this.moveStoppedAndSetStartPosition();
+        this.shieldEnable();
+        
+        // if(--this.ship.lifes > 0){
+        //     // this.looseLvl();
+        //     console.log('qwe2')
+        //     this.moveStopped();
+        //     this.shieldEnable();
+        // } else {
+        //     console.log('qwe1234')
+        // }
 
     }
 
@@ -144,9 +144,9 @@ export default class Ship {
         },this.disableMoveTime);
     }
 
-    shieldEnable(){
+    shieldEnable( frameCounterForEnable = 60 * 2 ){
        
-        this.ship.shieldEnable = true;
+        this.ship.canTouch = false;
         this.shieldDrawId = this.canvas.addHandlerToDraw(ctx=>{
             ctx.strokeStyle = "white";
             ctx.beginPath();
@@ -162,13 +162,13 @@ export default class Ship {
             ctx.closePath();
         });
 
-
         let framesCountWhenShieldStart = gameConf.dataCanvas.framesAll;
         let loopId = this.canvas.addActionHandler((gameConf)=>{
-            if(this.gameConf.dataCanvas.framesAll - framesCountWhenShieldStart > 60 * 2){
+            if(this.gameConf.dataCanvas.framesAll - framesCountWhenShieldStart > frameCounterForEnable){
                 this.canvas.removeHandlerToDraw(this.shieldDrawId);
                 this.canvas.removeActionHandler(loopId);
                 this.ship.shieldEnable = false;
+                this.ship.canTouch = true;
             }
         });
 
