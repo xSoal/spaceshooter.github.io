@@ -35,9 +35,10 @@ export default class Ship {
             lifes: gameConf.defaultLifes,
             lastFrameCountOfFireCreate: 0,
             canTouch: true,
+            canMove: true,
             shieldEnable: false,
         };
-        this.disableMoveTime = 500;
+        this.disableMoveTime = 2500;
 
         this.init();
     }
@@ -50,6 +51,7 @@ export default class Ship {
             gameConf.mouse.mouseDown.value ? this.shipFire( this.canvas.ctx ) : "";
         });
         this.moveActionHandlerId = this.canvas.addActionHandler(()=>{
+            if(!this.ship.canMove) return;
             this.ship.position.x = gameConf.mouse.x;
             this.ship.position.y = gameConf.mouse.y;
         });
@@ -111,11 +113,13 @@ export default class Ship {
     }
 
     startDestroying(){
-        console.log(this.ship.shieldEnable)
-        if(this.ship.shieldEnable){
-            this.moveStopped();
-        } else {
+        console.log(this.ship.shieldEnable);
+
+        if(!this.ship.shieldEnable){
+            this.moveStoppedAndSetStartPosition();
             this.shieldEnable();
+        } else {
+            
             // if(--this.ship.lifes > 0){
             //     // this.looseLvl();
             //     console.log('qwe2')
@@ -124,18 +128,19 @@ export default class Ship {
             // } else {
             //     console.log('qwe1234')
             // }
-            
         }
 
     }
 
-    moveStopped(){
-        this.canvas.removeActionHandler(this.moveActionHandlerId);
+    moveStoppedAndSetStartPosition(){
+       this.ship.canMove = false;
+        // move ship to start
+
+        this.ship.position.x = window.innerWidth / 2;
+        this.ship.position.y = window.innerHeight - 150;
+        
         setTimeout(()=>{
-            this.moveActionHandlerId = this.canvas.addActionHandler(()=>{
-                this.ship.position.x = gameConf.mouse.x;
-                this.ship.position.y = gameConf.mouse.y;
-            });
+            this.ship.canMove = true;
         },this.disableMoveTime);
     }
 
