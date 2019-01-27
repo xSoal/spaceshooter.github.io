@@ -5,7 +5,7 @@ import showFps from './devFns';
 const gameMode = 'dev';
 
 let obj = {
-    maxFramesInSecond: 50,
+    maxFramesInSecond: 60,
     mouse: {
         x: 0,
         y: 0,

@@ -5,6 +5,7 @@ import resources from './resources';
 
 export default class Ship {
     constructor( canvas, gameObjects, resources ){
+        this.gameConf    = gameConf; 
         this.canvas      = canvas;
         this.gameObjects = gameObjects;
         this.resources   = resources;
@@ -155,10 +156,17 @@ export default class Ship {
             ctx.stroke();
             ctx.closePath();
         });
-        setTimeout(()=>{
-            this.canvas.removeHandlerToDraw(this.shieldDrawId);
-            this.ship.shieldEnable = false;
-        },2000);
+
+
+        let framesCountWhenShieldStart = gameConf.dataCanvas.framesAll;
+        let loopId = this.canvas.addActionHandler((gameConf)=>{
+            if(this.gameConf.dataCanvas.framesAll - framesCountWhenShieldStart > 60 * 2){
+                this.canvas.removeHandlerToDraw(this.shieldDrawId);
+                this.canvas.removeActionHandler(loopId);
+                this.ship.shieldEnable = false;
+            }
+        });
+
     }
 
     looseLvl(){
