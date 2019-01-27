@@ -104,7 +104,14 @@ export default class CanvasGame{
                 && (performance.now() - lastTimeIteration) > (1000 / gameConf.maxFramesInSecond) ){
                 // check for fps
                 let nowFullSeconds = performance.now() < 1000 ? 0 : parseInt( performance.now() / 1000 );
-                lastFullSeconds < nowFullSeconds ? this.dataCanvas.fps = 0 : this.dataCanvas.fps++;
+
+                if( lastFullSeconds < nowFullSeconds ){
+                    this.dataCanvas.fps = this.dataCanvas.fpsInSecondNow;
+                    this.dataCanvas.fpsInSecondNow = 0
+                }else {
+                    this.dataCanvas.fpsInSecondNow++;
+                }
+                
                 lastFullSeconds = nowFullSeconds;
 
                 lastTimeIteration  = performance.now();

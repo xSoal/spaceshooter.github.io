@@ -17,7 +17,12 @@ let obj = {
     defaultLifes: 4,
     boomSpritesCount: 8,
     dataCanvas : {
-        _fps: 0,
+        // iteration of frames in each second 
+        // from each new second will = 0
+        fpsInSecondNow: 0, 
+
+        // max frames count on each second
+        _fps:0,
         set fps(value){
             this._fps = value;
             gameMode == 'dev' ? showFps(value) : ''; 
@@ -26,6 +31,8 @@ let obj = {
         get fps(){
             return this._fps;
         },
+        // all frames from start drawing
+        // will used like time counter
         framesAll: 0, 
     },
     sound: {
@@ -42,7 +49,9 @@ window.addEventListener('mousemove', (event)=>{
 });
 
 window.addEventListener('mousedown', (event)=>{
+
     let e = event || window.event;
+    e.preventDefault();
     obj.mouse.mouseDown.value = true;
     obj.mouse.mouseDown.event = e;
 
