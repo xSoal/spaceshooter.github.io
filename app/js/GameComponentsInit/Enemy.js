@@ -37,9 +37,9 @@ export default class Enemy{
                 object: resources.enemyEasyImage.object,
                 spriteSize: easySpriteSize,
             },
-            sound: {
-                object: resources.boomEnemySound.object
-            }
+            // sound: {
+            //     object: resources.boomEnemySound.object
+            // }
         };
  
         switch (type) {
@@ -96,9 +96,9 @@ export default class Enemy{
     }
 
     playSoundDestroying(){
-        let soundDestroyToPlay = new Audio();
-        soundDestroyToPlay.src = this.ship.sound.object.src;
-        soundDestroyToPlay.play();
+        // let soundDestroyToPlay = new Audio();
+        // soundDestroyToPlay.src = this.ship.sound.object.src;
+        // soundDestroyToPlay.play();
     }
 
     checkForOutScreen(){

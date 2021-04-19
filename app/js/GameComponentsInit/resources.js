@@ -39,11 +39,11 @@ export default function(){
             object: new Image(),
             src: "images/boom.png",
         },
-        boomEnemySound: {
-            type: "sound",
-            object: new Audio(),
-            src: "sounds/enemy_boom.mp3",
-        }
+        // boomEnemySound: {
+        //     type: "sound",
+        //     object: new Audio(),
+        //     src: "sounds/enemy_boom.mp3",
+        // }
     }
 
     Object.values(resources).forEach((obj)=>{

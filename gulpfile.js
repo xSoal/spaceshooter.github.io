@@ -1,7 +1,7 @@
 
 let build_params = {
 	source: false,
-	url: "http://shooternew.io/build",
+	url: "http://shooternew.own",
 	dev: true,
 }
 
