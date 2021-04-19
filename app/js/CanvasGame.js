@@ -121,10 +121,13 @@ export default class CanvasGame{
                 
             } else if( performance.now() - lastTimeIteration > 1000 / gameConf.maxFramesInSecond ){
                 // call to drawing preloadings and else that not need to await
-                this.drawAllInStoppedMode();
+                if(this.isStopped){
+                    this.drawAllInStoppedMode();
+                }
             }
             window.requestAnimationFrame( loop );
-        }
+        };
+
         window.requestAnimationFrame( loop );
     }
 

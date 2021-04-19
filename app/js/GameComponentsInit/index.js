@@ -39,7 +39,7 @@ export default class GameComponentsInit{
         ];
 
         this.enemiesCreateActionHandlerId = this.canvas.addActionHandler(()=>{
-           
+
             enemyMap.forEach(enemyMapPart=>{
                let frameNow = gameConf.dataCanvas.framesAll;
                if(frameNow >= enemyMapPart.fromFrame
@@ -79,7 +79,8 @@ export default class GameComponentsInit{
                 preLoaderLineHeight
             );
         };
-        this.preLoaderDrawHandlerId = this.canvas.addHandlerToDrawInStoppedMode(ctx=>{
+
+        this.preLoaderDrawHandlerId = this.canvas.addHandlerToDrawInStoppedMode(ctx => {
             preLoaderHandler(ctx);
         });
     }
@@ -91,12 +92,12 @@ export default class GameComponentsInit{
                 case "image":
                     item.object.onload = () => {
                         item.isReady = true;
-                    }
+                    };
                     break;
                 case "sound":
                     item.object.oncanplaythrough = () => {
                         item.isReady = true;
-                    }
+                    };
                 default:
                     break;
             }
@@ -108,11 +109,12 @@ export default class GameComponentsInit{
                     && item.object.width != 0
             });
             if(isReady){
+                this.canvas.removeHandlerToDrawInStoppedMode(this.preLoaderDrawHandlerId);
                 setTimeout(()=>{
                     this.canvas.go();
                     clearInterval(t);
                 }, 255);
             }
-        }); 
+        });
     }
 }
